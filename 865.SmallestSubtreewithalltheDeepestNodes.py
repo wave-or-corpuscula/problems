@@ -26,7 +26,7 @@ class Solution:
             if any(x for x in level):
                 levels.append(level)
         for i in range(len(levels) - 1, -1, -1):
-            levels.
+            print(levels[i])
 
 
 if __name__ == "__main__":
