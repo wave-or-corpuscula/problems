@@ -8,26 +8,20 @@ from binary import TreeNode, build_tree, print_tree
 
 class Solution:
     def subtreeWithAllDeepest(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
+        def dfs(node: TreeNode) -> TreeNode:
+            if not node: return (None, 0)
+            l_node, l_dist = dfs(node.left)
+            r_node, r_dist = dfs(node.right)
+
+            if l_dist > r_dist:
+                return (l_node, l_dist + 1)
+            elif r_dist > l_dist:
+                return (r_node, r_dist + 1)
+            else:
+                return (node, l_dist + 1)
+        return dfs(root)[0]
         
-        queue = deque([root])
-        levels = []
-        while queue:
-            level = []
-            size = len(queue)
-
-            for _ in range(size):
-                node = queue.popleft()
-                if node:
-                    level.append(node.val)
-                    queue.append(node.left)
-                    queue.append(node.right)
-                else:
-                    level.append(None)
-            if any(x for x in level):
-                levels.append(level)
-        for i in range(len(levels) - 1, -1, -1):
-            print(levels[i])
-
+# TODO: Разобрать задачу
 
 if __name__ == "__main__":
     sol = Solution()
