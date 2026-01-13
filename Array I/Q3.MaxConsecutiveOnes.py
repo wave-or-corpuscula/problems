@@ -13,4 +13,4 @@ class Solution:
             else:
                 max_seq = max(max_seq, only_ones)
                 only_ones = 0
-        return max_seq
+        return max(max_seq, only_ones)
