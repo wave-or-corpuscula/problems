@@ -60,6 +60,7 @@ class Solution:
                 right = mid
         return left
 
+
 # TODO: Порешать задачки на бинарный поиск (закрепить тему)
 
 if __name__ == "__main__":
