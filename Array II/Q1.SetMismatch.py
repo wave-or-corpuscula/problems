@@ -19,7 +19,7 @@ class Solution:
                 return [duplicate, i]
 
 
-class BestSolution: # TODO: Разобраться, почему это работает (понял)
+class BestSolution: # TODO: Разобраться, почему это работает (понял (красава))
     def findErrorNums(self, nums: List[int]) -> List[int]:
         count = [0] * len(nums)
         for i in nums:

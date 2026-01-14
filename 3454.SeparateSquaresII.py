@@ -56,6 +56,7 @@ class Solution(object):
             total += (y2-y1)*curr
         return y1+(expect-total)/curr
 
+# TODO: Да, я ее даже не смотрел. Надо посомтреть.
 
 if __name__ == "__main__":
     sol = Solution()
