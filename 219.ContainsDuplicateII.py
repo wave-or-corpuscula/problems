@@ -26,7 +26,6 @@ class SlidingWindowSolution:
         for i in range(N):
             if len(window) > k:
                 window.remove(nums[i - k - 1])
-            print(window)
             if nums[i] in window:
                 return True
             window.add(nums[i])
