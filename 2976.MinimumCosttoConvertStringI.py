@@ -34,10 +34,6 @@ class Solution:
                 return -1
         return total 
 
-        
-                
-
-
 
 if __name__ == "__main__":
     sol = Solution()
