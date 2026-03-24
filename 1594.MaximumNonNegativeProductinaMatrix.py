@@ -65,12 +65,7 @@ class DPSolution:
         dp_min[0][0] = grid[0][0]
 
         def left_top_neighbours(i, j):
-            res = []
-            if i - 1 >= 0:
-                res.append((i - 1, j))
-            if j - 1 >= 0:
-                res.append((i, j - 1))
-            return res
+            return [(x, y) for x, y in [(i-1, j), (i, j-1)] if x >= 0 and y >= 0]
 
         for i in range(R):
             for j in range(C):
