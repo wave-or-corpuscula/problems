@@ -54,12 +54,42 @@ class BFSSolution:
 
 class DPSolution:
     def maxProductPath(self, grid: List[List[int]]) -> int:
-        # TODO: Solve with DP
+        
+        R = len(grid)
+        C = len(grid[0])
+
+        dp_max = [[-float("inf")] * C for _ in range(R)]
+        dp_min = [[float("inf")] * C for _ in range(R)]
+
+        dp_max[0][0] = grid[0][0]
+        dp_min[0][0] = grid[0][0]
+
+        def left_top_neighbours(i, j):
+            res = []
+            if i - 1 >= 0:
+                res.append((i - 1, j))
+            if j - 1 >= 0:
+                res.append((i, j - 1))
+            return res
+
+        for i in range(R):
+            for j in range(C):
+                val = grid[i][j]
+                for x, y in left_top_neighbours(i, j):
+                    if val > 0:
+                        dp_max[i][j] = max(dp_max[i][j], dp_max[x][y] * val) 
+                        dp_min[i][j] = min(dp_min[i][j], dp_min[x][y] * val)
+                    else:
+                        dp_max[i][j] = max(dp_max[i][j], dp_min[x][y] * val)
+                        dp_min[i][j] = min(dp_min[i][j], dp_max[x][y] * val)
+
+        return dp_max[-1][-1] % MOD if dp_max[-1][-1] >= 0 else -1
+
 
 
 
 if __name__ == "__main__":
-    sol = BFSSolution()
+    sol = DPSolution()
     tests = [
         [[-1,-2,-3],[-2,-3,-3],[-3,-3,-2]],
         [[1,-2,1],[1,-2,1],[3,-4,1]],
