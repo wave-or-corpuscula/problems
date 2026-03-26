@@ -37,31 +37,22 @@ class Solution:
                     return True
                 
                 if diff > 0:
-                    if diff in top_cells:
-                        top_R = len(table[:i]) + 1
-                        
-                        if C > 1 and top_R > 1:
-                            return True
-
-                        if C == 1 :
-                            if diff in [table[0][0], table[0][-1]]:
-                                return True
-                        
-                        if top_R == 1 and diff in [table[0][0], table[0][-1]]:
-                            return True
+                    top_R = len(table[:i]) + 1
+                    if ((diff in top_cells) and (
+                        (C > 1 and top_R > 1) or
+                        (C == 1 and diff in [table[0][0], table[0][-1]]) or
+                        (top_R == 1 and diff in [table[0][0], table[0][-1]])
+                    )):
+                        return True
                 else:
-                    if -diff in bottom_cells:
-                        cur = table[i + 1:]
-                        bott_R = len(cur)
-                        if C > 1 and bott_R > 1:
-                            return True
-                        
-                        if C == 1:
-                            if -diff in [cur[0][0], cur[-1][0]]:
-                                return True
-
-                        if bott_R == 1 and -diff in [table[-1][0], table[-1][-1]]:
-                            return True
+                    cur = table[i + 1:]
+                    bott_R = len(cur)
+                    if ((-diff in bottom_cells) and (
+                        (C > 1 and bott_R > 1) or
+                        (C == 1 and -diff in [cur[0][0], cur[-1][0]]) or 
+                        (bott_R == 1 and -diff in [table[-1][0], table[-1][-1]])
+                    )):
+                        return True
                         
             return False
                 
