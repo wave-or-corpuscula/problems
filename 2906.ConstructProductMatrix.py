@@ -1,6 +1,5 @@
 # https://leetcode.com/problems/construct-product-matrix/description/?envType=daily-question&envId=2026-03-24
 
-import numpy as np
 from typing import List
 
 
