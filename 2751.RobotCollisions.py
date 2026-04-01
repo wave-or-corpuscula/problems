@@ -4,65 +4,70 @@ from typing import List
 
 
 class Solution:
-    def survivedRobotsHealths(self, positions: List[int], healths: List[int], directions: str) -> List[int]:
-        """
-        x = x0 + v * t
-        10
-        RL  RL
-        123456789
-        """
-        N = len(positions)
+    def survivedRobotsHealths(
+        self, positions: List[int], healths: List[int], directions: str
+    ) -> List[int]:
 
-        going_left = {}
-        going_right = {}
+        robots = sorted(
+            [(positions[i], healths[i], directions[i], i) for i in range(len(positions))]
+        )
 
-        collisions = []
+        stack = []
+        alive = [True] * len(robots)
 
-        for i in range(N):
-            if directions[i] == "R":
-                going_right[positions[i]] = (i + 1, healths[i])
+        for i, (pos, health, direction, idx) in enumerate(robots):
+
+            if direction == 'R':
+                stack.append(i)
+                continue
+
+            while stack and health > 0:
+                j = stack[-1]  # последний R
+                _, r_health, _, _ = robots[j]
+
+                if r_health < health:
+                    # R умирает
+                    alive[j] = False
+                    stack.pop()
+                    health -= 1
+
+                elif r_health > health:
+                    # L умирает
+                    alive[i] = False
+                    robots[j] = (
+                        robots[j][0],
+                        r_health - 1,
+                        robots[j][2],
+                        robots[j][3],
+                    )
+                    health = 0
+
+                else:
+                    # оба умирают
+                    alive[j] = False
+                    alive[i] = False
+                    stack.pop()
+                    health = 0
+
+            if health > 0:
+                robots[i] = (pos, health, direction, idx)
             else:
-                going_left[positions[i]] = (i + 1, healths[i])
+                alive[i] = False
 
-        while going_right and going_left:
-            
-            if min(going_right.keys()) > max(going_left.keys()):
-                break
+        # собираем ответ
+        res = []
+        for i in range(len(robots)):
+            if alive[i]:
+                res.append((robots[i][3], robots[i][1]))
 
-            print(going_right)
-            print(going_left)
-
-            # Проблема два раза добавляется один индекс из going_left
-            for pos in going_right.keys():
-                if (pos in going_left):
-                    collisions.append((pos, pos))
-                elif (pos + 1 in going_left):
-                    collisions.append((pos, pos + 1))
-            
-            
-            while collisions:
-                rpos, lpos = collisions.pop()
-                rnum, right_health = going_right.pop(rpos)
-                lnum, left_health = going_left.pop(lpos)
-
-                if right_health > left_health:
-                    going_right[rpos] = (rnum, right_health - 1)
-                elif left_health > right_health:
-                    going_left[lpos] = (lnum, left_health - 1)
-
-            going_right = {k + 1: v for k, v in going_right.items()}
-            going_left = {k - 1: v for k, v in going_left.items()}
-
-        result = list(going_left.values())
-        result.extend(going_right.values())
-        result.sort()
-
-        return [h for _, h in result]
+        res.sort()  # по исходному индексу
+        return [h for _, h in res]
 
 if __name__ == "__main__":
     sol = Solution()
     tests = [
-        ([3,5,2,6],   [10,10,15,12],  "RLRL"),
+        ([47,26,31,38,35,36], [21,36,9,36,10,38], "RLRLRR")
+        # ([3,5,2,6],   [10,10,15,12],  "RLRL"),
         # ([6,5], [100, 100], "RL"),
         # ([1,2,5,7, 100],   [10,10,11,12, 100],  "RLRLL"),
         # ([5,4,3,2,1], [2,17,9,15,10], "RRRRR"),
