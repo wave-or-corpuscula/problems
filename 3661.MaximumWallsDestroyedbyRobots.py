@@ -1,5 +1,9 @@
 # https://leetcode.com/problems/maximum-walls-destroyed-by-robots/description/?envType=daily-question&envId=2026-04-03
 
+import bisect
+from typing import List
+
+
 class Solution:
     def maxWalls(
         self, robots: List[int], distance: List[int], walls: List[int]
