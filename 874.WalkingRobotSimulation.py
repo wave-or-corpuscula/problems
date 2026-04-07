@@ -61,8 +61,6 @@ class Solution:
         return best
             
 
-
-
 if __name__ == "__main__":
     sol = Solution()
     tests = [
