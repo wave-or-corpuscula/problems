@@ -70,47 +70,6 @@ class Robot:
         return ["East", "North", "West", "South"][self.direction]
 
 
-class BetterRobot:
-
-    def __init__(self, width: int, height: int):
-        self.w = width
-        self.h = height
-        self.perimeter = 2 * (width + height - 2)
-        self.pos = 0
-        self.moved = False
-
-    def step(self, num: int) -> None:
-        self.moved = True
-        self.pos = (self.pos + num) % self.perimeter
-
-    def getPos(self) -> list[int]:
-        p = self.pos
-        
-        if p < self.w:
-            return [p, 0]
-        elif p < self.w + self.h - 1:
-            return [self.w - 1, p - (self.w - 1)]
-        elif p < 2 * self.w + self.h - 2:
-            return [(self.w - 1) - (p - (self.w + self.h - 2)), self.h - 1]
-        else:
-            return [0, self.perimeter - p]
-
-    def getDir(self) -> str:
-        p = self.pos
-        
-        if p == 0:
-            return "South" if self.moved else "East"
-            
-        if p < self.w:
-            return "East"
-        elif p < self.w + self.h - 1:
-            return "North"
-        elif p < 2 * self.w + self.h - 2:
-            return "West"
-        else:
-            return "South"
-
-
 if __name__ == "__main__":
     rob = Robot(3, 2)
     # rob.step(2)
