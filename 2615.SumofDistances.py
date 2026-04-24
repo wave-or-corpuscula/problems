@@ -29,14 +29,12 @@ class Solution:
 
         ans = [0] * len(nums)
         for num, num_poses in nums_positions.items():
-            n_left = 0
-            n_right = len(num_poses)
+            n_left, n_right = 0, len(num_poses)
 
             if n_right == 1:
                 continue
 
-            left = 0
-            right = sum(num_poses)
+            left, right = 0, sum(num_poses)
             for ind in num_poses:
                 ans[ind] = ind * (n_left - n_right) - left + right
                 left += ind
